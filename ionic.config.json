@@ -1,6 +1,6 @@
 {
   "name": "transportNow",
-  "app_id": "",
+  "app_id": "890741d6",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}
