@@ -51,6 +51,12 @@ export class BusPage {
     });
 
     loadPrompt.present();
+
+    this.initBusData();
+
+    setTimeout( () => {
+      loadPrompt.dismiss();
+    }, 2000);
   }
 
   /************************
@@ -64,7 +70,12 @@ export class BusPage {
       var lat = response.coords.latitude;
       var long = response.coords.longitude;
 
-      
+      console.log('Latitude: ' + lat);
+      console.log('longitude: ' + long);
+
+      var apiLink = 'https://transportapi.com/v3/uk/bus/stops/near.json?app_id=8f3fc284&app_key=529d9fe661f4431534026d94dfcd76a8' +
+                    '&lat=' + lat + '&lon=' + long;
+
     })
   }
 
