@@ -97,7 +97,7 @@ export class BusPage {
       var apiLink = 'https://transportapi.com/v3/uk/bus/stops/near.json?app_id=8f3fc284&app_key=529d9fe661f4431534026d94dfcd76a8' +
                     '&lat=' + lat + '&lon=' + long;
 
-      this.transportApi.readXml(apiLink, (xml) => this.processApiData(xml));
+      //this.transportApi.readXml(apiLink, (xml) => this.processApiData(xml));
 
     })
   }
