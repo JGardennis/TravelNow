@@ -32,11 +32,13 @@ class Bus {
 class BusStop {
   stop_Name;
   atco_Code;
+  distance;
   running_Buses: Array<Bus>;
 
-  constructor(name: string, code: string) {
+  constructor(name: string, code: string, dist: number) {
     this.stop_Name = name;
     this.atco_Code = code;
+    this.distance = dist;
     this.running_Buses = new Array<Bus>();
   }
 }
@@ -112,11 +114,17 @@ export class BusPage {
     var busStops = apiData.stops;
 
     for(var i = 0; i < busStops.length; i++) {
-      let currentStop = new BusStop(busStops[i].stop_name, busStops[i].atcocode);
-      console.log('Processing stop...' + currentStop);
+      let currentStop = new BusStop(busStops[i].stop_name, busStops[i].atcocode, busStops[i].distance);
       this.allBusStops.push(currentStop);
     }
 
-  }
+    this.allBusStops.sort( (s1, s2): number => {
+      if(s1.distance > s2.distance) return 1;
+      if(s1.distance < s2.distance) return -1;
+      return 0;
+    })
 
+    console.log(this.allBusStops);
+
+  }
 }
