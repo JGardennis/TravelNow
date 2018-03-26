@@ -8,6 +8,11 @@ import { IonicPage, NavController, NavParams, LoadingController,
 import { Geolocation } from '@ionic-native/geolocation';
 
 // ********************************************
+// PROVIDERS
+// ********************************************
+import { TransportApiProvider } from '../../providers/transport-api/transport-api';
+
+// ********************************************
 // CLASSES
 // ********************************************
 class Bus {
@@ -24,6 +29,18 @@ class Bus {
   }
 }
 
+class BusStop {
+  stop_Name;
+  atco_Code;
+  running_Buses: Array<Bus>;
+
+  constructor(name: string, code: string) {
+    this.stop_Name = name;
+    this.atco_Code = code;
+    this.running_Buses = new Array<Bus>();
+  }
+}
+
 
 @Component({
   selector: 'page-buses',
@@ -31,10 +48,14 @@ class Bus {
 })
 export class BusPage {
 
+  private allBusStops : Array<BusStop>;
+
   constructor(
     public navCtrl: NavController,
     public loadCtrl: LoadingController,
-    public location: Geolocation) {
+    public location: Geolocation,
+    public transportApi: TransportApiProvider) {
+      this.allBusStops = new Array<BusStop>();
 
   }
 
@@ -76,7 +97,26 @@ export class BusPage {
       var apiLink = 'https://transportapi.com/v3/uk/bus/stops/near.json?app_id=8f3fc284&app_key=529d9fe661f4431534026d94dfcd76a8' +
                     '&lat=' + lat + '&lon=' + long;
 
+      this.transportApi.readXml(apiLink, (xml) => this.processApiData(xml));
+
     })
+  }
+
+  /************************
+  @name:      processApiData
+  @desc:      interprets all Api data received from requests
+  @param apiData:   the raw JSON formatted Api data
+  ************************/
+  processApiData(apiData)
+  {
+    var busStops = apiData.stops;
+
+    for(var i = 0; i < busStops.length; i++) {
+      let currentStop = new BusStop(busStops[i].stop_name, busStops[i].atcocode);
+      console.log('Processing stop...' + currentStop);
+      this.allBusStops.push(currentStop);
+    }
+
   }
 
 }

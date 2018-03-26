@@ -8,4 +8,12 @@
 
 <ion-content padding>
 
+  <ion-list no-lines>
+
+    <button ion-item *ngFor='let stop of allBusStops'>
+      <h1> {{stop.stop_Name}} </h1>
+    </button>
+
+  </ion-list>
+
 </ion-content>
