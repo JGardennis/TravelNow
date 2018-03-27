@@ -104,6 +104,15 @@ export class BusPage {
   }
 
   /************************
+  @name:      showBusInfo
+  @desc:      opens new page showing all buses in operation at selected stop
+  @param busStop:   a selected bus stop
+  ************************/
+  showBusInfo(busStop) {
+    console.log(busStop);
+  }
+
+  /************************
   @name:      initBusData
   @desc:      creates xml link to initialise Transport API with geolocation
   ************************/
@@ -147,14 +156,5 @@ export class BusPage {
 
     console.log(this.allBusStops);
 
-  }
-
-  /************************
-  @name:      showBusInfo
-  @desc:      opens new page showing all buses in operation at selected stop
-  @param busStop:   a selected bus stop
-  ************************/
-  showBusInfo(busStop) {
-    console.log(busStop);
   }
 }

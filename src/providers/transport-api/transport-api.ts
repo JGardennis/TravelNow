@@ -18,8 +18,9 @@ export class TransportApiProvider {
     xhttp.onreadystatechange = function() {
       if(xhttp.readyState == 4 && xhttp.status == 200) {
         var responseData = JSON.parse(xhttp.responseText);
-        console.log(responseData);
-
+        if(responseData) {
+          console.log('JSON Data received ...')
+        }
         //check for errors
         if(responseData.error) {
           console.log('ERROR: ' + responseData.error);
