@@ -43,6 +43,27 @@ class BusStop {
   }
 }
 
+// ********************************************
+// COMPONENT
+// ********************************************
+@Component({
+  templateUrl: 'busInfo.html',
+  selector: 'bus-info'
+})
+export class BusInfoPage {
+  busInfo;
+
+  constructor(
+    public params:    NavParams,
+    public viewCtrl:  ViewController
+  ) {
+    this.busInfo = this.params.get('busInfo');
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss();
+  }
+}
 
 @Component({
   selector: 'page-buses',
@@ -126,5 +147,14 @@ export class BusPage {
 
     console.log(this.allBusStops);
 
+  }
+
+  /************************
+  @name:      showBusInfo
+  @desc:      opens new page showing all buses in operation at selected stop
+  @param busStop:   a selected bus stop
+  ************************/
+  showBusInfo(busStop) {
+    console.log(busStop);
   }
 }
