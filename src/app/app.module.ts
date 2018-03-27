@@ -4,6 +4,8 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { BusPage } from '../pages/buses/buses';
+import { BusInfoPage } from '../pages/buses/buses';
+
 import { TrainPage } from '../pages/trains/trains';
 import { SettingPage } from '../pages/settings/settings';
 
@@ -18,6 +20,7 @@ import { TransportApiProvider } from '../providers/transport-api/transport-api';
   declarations: [
     MyApp,
     BusPage,
+    BusInfoPage,
     TrainPage,
     SettingPage,
     TabsPage
@@ -30,6 +33,7 @@ import { TransportApiProvider } from '../providers/transport-api/transport-api';
   entryComponents: [
     MyApp,
     BusPage,
+    BusInfoPage,
     TrainPage,
     SettingPage,
     TabsPage

@@ -30,16 +30,16 @@ class Bus {
 }
 
 class BusStop {
-  stop_Name;
-  atco_Code;
+  name;
+  atco;
   distance;
-  running_Buses: Array<Bus>;
+  running: Array<Bus>;
 
   constructor(name: string, code: string, dist: number) {
-    this.stop_Name = name;
-    this.atco_Code = code;
+    this.name = name;
+    this.atco = code;
     this.distance = dist;
-    this.running_Buses = new Array<Bus>();
+    this.running = new Array<Bus>();
   }
 }
 
@@ -51,13 +51,13 @@ class BusStop {
   selector: 'bus-info'
 })
 export class BusInfoPage {
-  busInfo;
+  selectedStop;
 
   constructor(
     public params:    NavParams,
     public viewCtrl:  ViewController
   ) {
-    this.busInfo = this.params.get('busInfo');
+    this.selectedStop = this.params.get('busStop');
   }
 
   dismiss() {
@@ -77,9 +77,20 @@ export class BusPage {
     public navCtrl: NavController,
     public loadCtrl: LoadingController,
     public location: Geolocation,
-    public transportApi: TransportApiProvider) {
+    public transportApi: TransportApiProvider,
+    public modalCtrl: ModalController) {
       this.allBusStops = new Array<BusStop>();
 
+  }
+  /************************
+  @name:      openModal
+  @desc:      opens new page showing all buses in operation at selected stop
+  @param selectedStop:   a selected bus stop
+  ************************/
+  openModal(selectedStop : BusStop) {
+    console.log(selectedStop);
+    let modal = this.modalCtrl.create(BusInfoPage, selectedStop);
+    modal.present();
   }
 
   /************************
@@ -104,20 +115,13 @@ export class BusPage {
   }
 
   /************************
-  @name:      showBusInfo
-  @desc:      opens new page showing all buses in operation at selected stop
-  @param busStop:   a selected bus stop
-  ************************/
-  showBusInfo(busStop) {
-    console.log(busStop);
-  }
-
-  /************************
   @name:      initBusData
   @desc:      creates xml link to initialise Transport API with geolocation
   ************************/
   initBusData()
   {
+    console.log('HERE');
+
     //get user's location
     this.location.getCurrentPosition().then((response) => {
       var lat = response.coords.latitude;
@@ -131,7 +135,7 @@ export class BusPage {
 
       this.transportApi.readXml(apiLink, (xml) => this.processApiData(xml));
 
-    })
+    });
   }
 
   /************************
@@ -144,7 +148,7 @@ export class BusPage {
     var busStops = apiData.stops;
 
     for(var i = 0; i < busStops.length; i++) {
-      let currentStop = new BusStop(busStops[i].stop_name, busStops[i].atcocode, busStops[i].distance);
+      let currentStop = new BusStop(busStops[i].name, busStops[i].atcocode, busStops[i].distance);
       this.allBusStops.push(currentStop);
     }
 
