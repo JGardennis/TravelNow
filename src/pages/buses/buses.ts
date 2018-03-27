@@ -17,15 +17,13 @@ import { TransportApiProvider } from '../../providers/transport-api/transport-ap
 // ********************************************
 class Bus {
   direction;
-  time_Hour;
-  time_Minute;
-  bus_line;
+  departTime;
+  line;
 
   constructor(dir: string, hr: string, min: string, line: string) {
     this.direction = dir;
-    this.time_Hour = hr;
-    this.time_Minute = min;
-    this.bus_line = line;
+    this.departTime = hr;
+    this.line = line;
   }
 }
 
@@ -88,9 +86,10 @@ export class BusPage {
   @param selectedStop:   a selected bus stop
   ************************/
   openModal(selectedStop : BusStop) {
-    console.log(selectedStop);
     let modal = this.modalCtrl.create(BusInfoPage, selectedStop);
     modal.present();
+
+    this.populateBusStop(selectedStop);
   }
 
   /************************
@@ -159,6 +158,50 @@ export class BusPage {
     })
 
     console.log(this.allBusStops);
+  }
+
+  /************************
+  @name:      populateBusStop
+  @desc:      uses ATCO code of a BusStop to find all operating buses
+  @param busStop:   the Bus stop to use
+  ************************/
+  populateBusStop(data) {
+
+    var name = data.busStop.name;
+    var atco = data.busStop.atco;
+    var dist = data.busStop.distance;
+    let busStop = new BusStop(name, atco, dist);
+
+
+    let loadPrompt = this.loadCtrl.create({
+      content: 'Finding buses at' + busStop.name + '...'
+    });
+
+    loadPrompt.present();
+
+    var link = 'https://transportapi.com/v3/uk/bus/stop/' + busStop.atco +
+          '/live.json?app_id=8f3fc284&app_key=529d9fe661f4431534026d94dfcd76a8&group=route&nextbuses=yes';
+
+    //console.log(busStop);
+
+    this.transportApi.readXml(link, (xml) => populate(xml));
+
+    var populate = function(stopData) {
+
+      var departures = stopData.departures;
+
+      // Each route number is treated an object in JSON
+      for(var route in departures) {
+
+        // Each bus under each route is then treated as an array element
+        for(var i = 0; i < departures[route].length; i++) {
+
+        }
+      }
+
+    }
+
+    loadPrompt.dismiss();
 
   }
 }
