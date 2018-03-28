@@ -10,7 +10,11 @@
 
   <ion-list no-lines>
 
-
+    <ion-item *ngFor='let bus of selectedStop.running'>
+      <h1> {{ bus.direction }} </h1>
+      <h2> {{ bus.departTime }}</h2>
+      <h3> {{ bus.line }} </h3>
+    </ion-item>
 
   </ion-list>
 
