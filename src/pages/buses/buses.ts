@@ -1,20 +1,18 @@
-// ********************************************
 // IMPORTS
-// ********************************************
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController,
-  ModalController, ViewController, AlertController } from 'ionic-angular';
+import {  IonicPage, NavController, NavParams, LoadingController,
+          ModalController, ViewController, AlertController,
+          PopoverController} from 'ionic-angular';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
-// ********************************************
 // PROVIDERS
-// ********************************************
 import { TransportApiProvider } from '../../providers/transport-api/transport-api';
 
-// ********************************************
+// PAGES
+import { PopoverPage } from '../../pages/popover/popover';
+
 // CLASSES
-// ********************************************
 class Bus {
   direction;
   departTime;
@@ -53,9 +51,18 @@ export class BusInfoPage {
 
   constructor(
     public params:    NavParams,
-    public viewCtrl:  ViewController
-  ) {
-    this.selectedStop = this.params.get('busStop');
+    public viewCtrl:  ViewController,
+    public popCtrl: PopoverController
+  ) { this.selectedStop = this.params.get('busStop'); }
+
+  /************************
+  @name:      openPopover
+  @desc:      opens a popover used for searching and filtering results
+  @param event:   used to position the popover directly at click event position
+  ************************/
+  openPopover(event, busStop) {
+    let popover = this.popCtrl.create(PopoverPage, busStop);
+    popover.present({ ev : event });
   }
 
   dismiss() { this.viewCtrl.dismiss(); }

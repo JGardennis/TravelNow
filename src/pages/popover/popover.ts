@@ -1,12 +1,6 @@
+// IMPORTS
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the PopoverPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -14,12 +8,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'popover.html',
 })
 export class PopoverPage {
+  allBuses;
+  busLines = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public params : NavParams) {
+    this.allBuses = this.params.get('allBuses');
+    this.busLines = new Array<string>();
+
+    for(var i = 0; i < this.allBuses.length; i++) {
+      
+    }
+
+  }
+
+  /************************
+  @name:      getBusLines
+  @desc:      searches all current bus stops and gets all individual lines
+  ************************/
+  getBusLines() {
+
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad PopoverPage');
+    console.log(this.allBuses);
   }
 
 }

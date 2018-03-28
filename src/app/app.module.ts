@@ -11,6 +11,8 @@ import { SettingPage } from '../pages/settings/settings';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
+import { PopoverPage } from '../pages/popover/popover';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -23,7 +25,8 @@ import { TransportApiProvider } from '../providers/transport-api/transport-api';
     BusInfoPage,
     TrainPage,
     SettingPage,
-    TabsPage
+    TabsPage,
+    PopoverPage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,8 @@ import { TransportApiProvider } from '../providers/transport-api/transport-api';
     BusInfoPage,
     TrainPage,
     SettingPage,
-    TabsPage
+    TabsPage,
+    PopoverPage
   ],
   providers: [
     StatusBar,

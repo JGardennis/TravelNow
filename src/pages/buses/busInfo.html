@@ -2,9 +2,17 @@
   <ion-navbar>
     <ion-title> {{selectedStop.name}} </ion-title>
 
+    <ion-buttons start>
+
+      <button item item-icon-left ion-button icon-only (click)='dismiss()'>
+        <ion-icon name='arrow-round-back'></ion-icon>
+      </button>
+
+    </ion-buttons>
+
     <ion-buttons end>
 
-      <button ion-button icon-only>
+      <button item item-icon-right ion-button icon-only (click)='openPopover($event, {allBuses : selectedStop.running})'>
         <ion-icon name='search'></ion-icon>
       </button>
 
