@@ -58,9 +58,7 @@ export class BusInfoPage {
     this.selectedStop = this.params.get('busStop');
   }
 
-  dismiss() {
-    this.viewCtrl.dismiss();
-  }
+  dismiss() { this.viewCtrl.dismiss(); }
 }
 
 @Component({
@@ -87,8 +85,7 @@ export class BusPage {
   @desc:      opens new page showing all buses in operation at selected stop
   @param selectedStop:   a selected bus stop
   ************************/
-  openModal(selectedStop)
-  {
+  openModal(selectedStop) {
     var index = this.linkBusStop(selectedStop.busStop);
     var unWrappedBusStop = this.allBusStops[index];
 
@@ -97,30 +94,13 @@ export class BusPage {
     // Display populated BusInfoPage
     let modal = this.modalCtrl.create(BusInfoPage, selectedStop);
     modal.present();
-    // this.processModalData(unWrappedBusStop);
-
-    // // Check if bus stop has previously been populated, set status accordingly
-    // //    populate if needed
-    // if(unWrappedBusStop.running.length < 1) {
-    //   console.log('Bus stop not populated... populating');
-    //   this.populateStatus = false;
-    //   this.processModalData(unWrappedBusStop);
-    // }
-    // else this.populateStatus = true;
-    //
-    // // Open modal if populated
-    // if(this.populateStatus) {
-    //   let modal = this.modalCtrl.create(BusInfoPage, unWrappedBusStop);
-    //   modal.present();
-    // }
   }
 
   /************************
   @name:      ionViewDidLoad
   @desc:      runs function as soon as page is loaded
   ************************/
-  ionViewDidLoad()
-  {
+  ionViewDidLoad() {
     console.log('Bus Page Loaded...');
 
     let loadingPrompt = this.loadCtrl.create({ content: 'Finding bus stops...'});
@@ -135,21 +115,15 @@ export class BusPage {
   @name:      initPageData
   @desc:      creates xml link to initialise Transport API with geolocation
   ************************/
-  initPageData()
-  {
+  initPageData() {
     //get user's location
     this.location.getCurrentPosition().then((response) => {
       var lat = response.coords.latitude;
       var long = response.coords.longitude;
-
-      console.log('Latitude: ' + lat);
-      console.log('longitude: ' + long);
-
       var link = 'https://transportapi.com/v3/uk/bus/stops/near.json?app_id=8f3fc284&app_key=529d9fe661f4431534026d94dfcd76a8' +
                     '&lat=' + lat + '&lon=' + long;
 
       this.transportApi.readXml(link, (xml) => this.processBusStopData(xml));
-
     });
   }
 
@@ -158,8 +132,7 @@ export class BusPage {
   @desc:      creates xml link to initialise Transport API with atco code of
               selected bus stop
   ************************/
-  initModalData(busStop : BusStop)
-  {
+  initModalData(busStop : BusStop) {
     var msg = 'Finding buses at ' + busStop.name + '...';
     let loadingPrompt = this.loadCtrl.create({ content: msg});
     loadingPrompt.present();
@@ -170,8 +143,6 @@ export class BusPage {
     this.transportApi.readXml(link, (xml) => this.processModalData(xml, busStop))
 
     setTimeout( () => { loadingPrompt.dismiss() }, 2000);
-
-
   }
 
   /************************
@@ -191,8 +162,7 @@ export class BusPage {
   @desc:      interprets all bus stop JSON data
   @param apiData:   the JSON formatted Api data
   ************************/
-  processBusStopData(apiData)
-  {
+  processBusStopData(apiData) {
     var busStops = apiData.stops;
 
     for(var i = 0; i < busStops.length; i++) {
@@ -205,8 +175,6 @@ export class BusPage {
       if(s1.distance < s2.distance) return -1;
       return 0;
     })
-
-    console.log(this.allBusStops);
   }
 
   /************************
@@ -220,23 +188,18 @@ export class BusPage {
 
     // Check that Api data is not empty
     if(departures) {
-
       // Each route number is treated an object in JSON
       for(var route in departures) {
-
         // Each bus under each route is then treated as an array element
         for(var i = 0; i < departures[route].length; i++) {
-
           // Get Current Bus in array
           var currentBus = departures[route][i];
-
           // Create new bus with current bus details
           let bus = new Bus(
             currentBus.direction,
             currentBus.aimed_departure_time,
             currentBus.line
           );
-
           // Add new bus to the Bus Stop's list of operating buses
           busStop.running.push(bus);
         }
@@ -245,14 +208,12 @@ export class BusPage {
     // Data is empty
     else {
       var msg = 'There are currently no buses running at ' + busStop.name;
-
       // Display alert to user
       let alert = this.alertCtrl.create({
         title: 'No buses found!',
         subTitle: msg,
         buttons: ['OK']
       });
-
       alert.present();
     }
   }
