@@ -1,8 +1,7 @@
 <ion-list>
 
-  <!-- <ion-item *ngFor='let bus of selectedStop.running'>
-    <h1> {{ bus.direction }} </h1>
-    <h2> {{ bus.departTime }}</h2>
-    <h3> {{ bus.line }} </h3>
-  </ion-item> -->
+  <button ion-item *ngFor='let line of busLines' (click)='filter(line)'>
+    <h1> {{ line }} </h1>
+  </button>
+
 </ion-list>

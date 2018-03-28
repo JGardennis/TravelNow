@@ -16,21 +16,36 @@ export class PopoverPage {
     this.busLines = new Array<string>();
 
     for(var i = 0; i < this.allBuses.length; i++) {
-      
+      // add current bus' line to busLines list if it doesn't exist already
+      if(!this.checkList(this.busLines, this.allBuses[i].line))
+        this.busLines.push(this.allBuses[i].line);
     }
 
   }
 
   /************************
-  @name:      getBusLines
-  @desc:      searches all current bus stops and gets all individual lines
+  @name:      checkList
+  @desc:      checks if a given array has a given element
+  @param list:   an array to check
+  @param element: an element to check for
+  @return returns true if found, false if not
   ************************/
-  getBusLines() {
-
+  checkList(list : Array<String>, element) {
+    for(var i = 0; i < list.length; i++)
+      if(list[i] == element)
+        return true;
+    return false;
   }
 
-  ionViewDidLoad() {
-    console.log(this.allBuses);
+  /************************
+  @name:      filter
+  @desc:      filters all results given a bus line to filter by
+  @param busLines:   the bus line to filter
+  ************************/
+  filter(busLine) {
+
+    var noFilter = this.allBuses;
+    
   }
 
 }
